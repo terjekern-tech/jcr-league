@@ -140,6 +140,92 @@
     border-radius: 1px;
   }
 
+  /* ===== SEASON 4 ANNOUNCEMENT BANNER ===== */
+  .season-banner {
+    background: linear-gradient(90deg, #0a0a0a 0%, #1a0000 40%, #1a0000 60%, #0a0a0a 100%);
+    border-bottom: 2px solid #e10600;
+    padding: 10px 20px;
+    text-align: center;
+    position: relative;
+    z-index: 100;
+    overflow: hidden;
+  }
+  .season-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(225,6,0,0.08), transparent);
+    animation: bannerShimmer 3s ease-in-out infinite;
+  }
+  @keyframes bannerShimmer {
+    0%, 100% { opacity: 0; transform: translateX(-100%); }
+    50%       { opacity: 1; transform: translateX(100%); }
+  }
+  .season-banner-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+  }
+  .season-banner-badge {
+    background: #e10600;
+    color: #fff;
+    font-family: 'Orbitron', monospace;
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    padding: 3px 10px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    box-shadow: 0 0 12px rgba(225,6,0,0.5);
+    animation: badgePulse 2s ease-in-out infinite;
+  }
+  @keyframes badgePulse {
+    0%,100% { box-shadow: 0 0 8px rgba(225,6,0,0.45); }
+    50%      { box-shadow: 0 0 22px rgba(225,6,0,0.75); }
+  }
+  .season-banner-text {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(.7rem, 2vw, .9rem);
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .season-banner-text span {
+    color: #d4a017;
+  }
+  .season-banner-sep {
+    color: #e10600;
+    font-size: 1rem;
+    line-height: 1;
+  }
+  .season-banner-link {
+    background: linear-gradient(90deg, #d4a017, #f0c040);
+    color: #000;
+    font-family: 'Orbitron', monospace;
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    padding: 5px 14px;
+    border-radius: 2px;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: filter .2s, transform .15s;
+  }
+  .season-banner-link:hover {
+    filter: brightness(1.15);
+    transform: scale(1.04);
+  }
+  @media (max-width: 480px) {
+    .season-banner-sep { display: none; }
+  }
+
   /* ===== HERO CANVAS BACKGROUND ===== */
   #hero-bg {
     position: absolute; inset: 0;
@@ -256,6 +342,17 @@
         <circle cx="194" cy="55" r="1.8" fill="#ffc820"/>
         <circle cx="194" cy="55" r="0.9" fill="#ffe060"/>
       </svg>
+    </div>
+  </div>
+
+  <!-- SEASON 4 ANNOUNCEMENT BANNER -->
+  <div class="season-banner">
+    <div class="season-banner-inner">
+      <span class="season-banner-badge">Coming Soon</span>
+      <span class="season-banner-text"><span>Season 4</span> is Starting Soon</span>
+      <span class="season-banner-sep">&#9646;</span>
+      <span class="season-banner-text">Signups are <span>Open</span></span>
+      <a href="https://discord.gg/jcr" target="_blank" class="season-banner-link">Sign Up Now</a>
     </div>
   </div>
 
