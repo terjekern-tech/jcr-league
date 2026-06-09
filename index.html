@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JCR – Just Competitive Racing | F1 Sim Racing League</title>
+  <meta name="description" content="JCR – Just Competitive Racing is a competitive F1 sim racing league with 3 tiers, 60+ drivers and 10 teams. Join the ultimate F1 25 online racing community.">
+  <meta name="keywords" content="JCR, Just Competitive Racing, F1 sim racing league, F1 25 league, F1 online racing, sim racing community, competitive F1 racing, F1 esports">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://terjekern-tech.github.io/jcr-league/">
+  <link rel="icon" type="image/png" href="jcr.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta property="og:title" content="JCR – Just Competitive Racing | F1 Sim Racing League">
+  <meta property="og:description" content="The ultimate competitive F1 sim racing league. Fair racing, real competition, pure adrenaline. 60+ drivers across 3 tiers.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://terjekern-tech.github.io/jcr-league/jcr.png">
+  <meta property="og:url" content="https://terjekern-tech.github.io/jcr-league/">
+  <meta property="og:site_name" content="JCR – Just Competitive Racing">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JCR – Just Competitive Racing | F1 Sim Racing League">
+  <meta name="twitter:description" content="The ultimate competitive F1 sim racing league. Fair racing, real competition, pure adrenaline.">
+  <meta name="twitter:image" content="https://terjekern-tech.github.io/jcr-league/jcr.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SportsOrganization",
+    "name": "JCR – Just Competitive Racing",
+    "alternateName": "JCR",
+    "url": "https://terjekern-tech.github.io/jcr-league/",
+    "logo": "https://terjekern-tech.github.io/jcr-league/jcr.png",
+    "description": "JCR is a competitive F1 sim racing league with 3 tiers, 60+ drivers and 10 teams. Fair racing, real competition, pure adrenaline.",
+    "sport": "Sim Racing",
+    "sameAs": [
+      "https://discord.gg/jcr",
+      "https://twitch.tv/jcrleague",
+      "https://www.tiktok.com/@jcrleague",
+      "https://www.youtube.com/@JCRLeague"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "JCR – Just Competitive Racing",
+    "url": "https://terjekern-tech.github.io/jcr-league/",
+    "description": "The ultimate competitive F1 sim racing league."
+  }
+  </script>
+  <link rel="stylesheet" href="css/style.css?v=4">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+  <meta name="google-site-verification" content="iIf2wIUuzDFbnxBmsTOsxikL3sfM2sfzdrACK39GhC8" />
+  <style>
+  /* ===== F1 LOADING SCREEN ===== */
+  #jcr-load {
+    position: fixed; inset: 0; z-index: 9999;
+    background: #000;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    transition: opacity .65s ease, visibility .65s ease;
+  }
+  #jcr-load.gone { opacity: 0; visibility: hidden; pointer-events: none; }
+
+  .ld-logo {
+    width: 100px; margin-bottom: 28px;
+    animation: logoPulse 1.8s ease-in-out infinite;
+  }
+  @keyframes logoPulse {
+    0%,100% { filter: drop-shadow(0 0 8px rgba(225,6,0,.55)); }
+    50%      { filter: drop-shadow(0 0 28px rgba(225,6,0,.75)) drop-shadow(0 0 55px rgba(225,6,0,.4)); }
+  }
+  .ld-brand {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(.6rem, 1.8vw, .8rem);
+    letter-spacing: .45em; color: #bbb;
+    text-transform: uppercase; margin-bottom: 40px;
+  }
+  .ld-lights { display: flex; gap: 14px; margin-bottom: 32px; }
+  .ld-light {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: #0f0000; border: 3px solid #250000;
+    transition: background .1s, border-color .1s, box-shadow .1s;
+  }
+  .ld-light.on {
+    background: #e10600; border-color: #ff2020;
+    box-shadow: 0 0 18px #e10600, 0 0 36px rgba(225,6,0,.5), inset 0 0 10px rgba(255,120,120,.4);
+  }
+  .ld-light.out { background: #030000; border-color: #080000; box-shadow: none; }
+  .ld-lo {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(1.2rem, 4.5vw, 2rem);
+    color: #e10600; letter-spacing: .28em; font-weight: 900;
+    opacity: 0; transform: scale(.85);
+    transition: opacity .2s, transform .2s;
+    text-shadow: 0 0 28px rgba(225,6,0,.6);
+    white-space: nowrap;
+  }
+  .ld-lo.show { opacity: 1; transform: scale(1); }
+  .ld-bar-wrap {
+    width: 260px; height: 2px; background: #1a1a1a;
+    border-radius: 2px; margin-top: 26px; overflow: hidden;
+  }
+  .ld-bar { height: 100%; background: linear-gradient(90deg, #e10600, #d4a017); width: 0; transition: width 2.4s cubic-bezier(.4,0,.2,1); }
+  @media (max-width: 480px) { .ld-light { width: 34px; height: 34px; } }
+
+  /* ===== CAR LAUNCH ANIMATION ===== */
+  #ld-car-wrap {
+    position: absolute;
+    left: 50%; bottom: 20%;
+    transform: translateX(-50%);
+    display: flex; align-items: center;
+    opacity: 0; pointer-events: none;
+  }
+  #ld-car-wrap.go {
+    animation: carBlast 1.7s cubic-bezier(.15,0,.6,1) forwards;
+  }
+  @keyframes carBlast {
+    0%   { opacity: 0; transform: translateX(-50%); filter: blur(0px); }
+    7%   { opacity: 1; transform: translateX(-48%); filter: blur(0px); }
+    35%  { filter: blur(0.8px); }
+    75%  { transform: translateX(55vw);  filter: blur(2.5px); }
+    100% { opacity: 1; transform: translateX(130vw); filter: blur(5px); }
+  }
+  #ld-car-svg {
+    width: 190px; flex-shrink: 0;
+    filter: drop-shadow(0 4px 18px rgba(225,6,0,0.9)) drop-shadow(0 0 8px rgba(255,140,0,0.5));
+  }
+  .ld-slines { display: flex; flex-direction: column; gap: 5px; margin-right: 8px; opacity: 0; }
+  #ld-car-wrap.go .ld-slines { animation: slinesShow 1.7s ease forwards; }
+  @keyframes slinesShow {
+    0%   { opacity: 0; }
+    12%  { opacity: 1; }
+    80%  { opacity: 0.85; }
+    100% { opacity: 0; }
+  }
+  .ld-slines span {
+    display: block; height: 2px;
+    background: linear-gradient(to left, rgba(225,6,0,0.9), transparent);
+    border-radius: 1px;
+  }
+
+  /* ===== HERO CANVAS BACKGROUND ===== */
+  #hero-bg {
+    position: absolute; inset: 0;
+    z-index: 0; pointer-events: none; display: block;
+  }
+  .hero::before { z-index: 1; }
+  .hero-logo, .hero h1, .hero-tagline, .hero-buttons {
+    position: relative; z-index: 2;
+  }
+  </style>
+</head>
+<body>
+
+  <!-- F1 LOADING SCREEN -->
+  <div id="jcr-load">
+    <img src="jcr.png" alt="JCR" class="ld-logo">
+    <div class="ld-brand">Just Competitive Racing</div>
+    <div class="ld-lights">
+      <div class="ld-light" id="ll1"></div>
+      <div class="ld-light" id="ll2"></div>
+      <div class="ld-light" id="ll3"></div>
+      <div class="ld-light" id="ll4"></div>
+      <div class="ld-light" id="ll5"></div>
+    </div>
+    <div class="ld-lo" id="ldLo">LIGHTS OUT</div>
+    <div class="ld-bar-wrap"><div class="ld-bar" id="ldBar"></div></div>
+    <!-- Car launches after lights out -->
+    <div id="ld-car-wrap">
+      <div class="ld-slines">
+        <span style="width:95px;margin-left:18px"></span>
+        <span style="width:135px"></span>
+        <span style="width:115px;margin-left:10px"></span>
+        <span style="width:100px;margin-left:14px"></span>
+        <span style="width:78px;margin-left:22px"></span>
+      </div>
+      <svg id="ld-car-svg" viewBox="0 0 260 74" xmlns="http://www.w3.org/2000/svg">
+        <!-- Ground shadow -->
+        <ellipse cx="125" cy="70" rx="98" ry="4" fill="rgba(0,0,0,0.4)"/>
+        <!-- Exhaust glow -->
+        <ellipse cx="15" cy="37" rx="11" ry="5.5" fill="rgba(255,140,0,0.9)"/>
+        <ellipse cx="8"  cy="37" rx="7"  ry="4"   fill="rgba(255,220,80,0.6)"/>
+
+        <!-- REAR WING — endplates + 2 planes + DRS beam -->
+        <rect x="18" y="8"  width="3.5" height="31" rx="1"   fill="#1a1a1a"/>
+        <rect x="39" y="8"  width="3.5" height="31" rx="1"   fill="#1a1a1a"/>
+        <rect x="16" y="8"  width="28"  height="6"  rx="1.5" fill="#e0e0e0"/>
+        <rect x="17" y="15" width="26"  height="5"  rx="1"   fill="#cacaca"/>
+        <rect x="23" y="22" width="15"  height="3"  rx="1"   fill="#aaa" opacity="0.9"/>
+        <rect x="28" y="25" width="4"   height="14" fill="#bbb"/>
+
+        <!-- MAIN BODY top silhouette -->
+        <path d="M22,44 L26,28 L38,22 L56,17 L80,13 L110,10 L132,10
+                 C140,10 144,12 148,15 L162,18 L180,21
+                 L198,26 L214,32 L220,38 L218,44 Z" fill="#e10600"/>
+
+        <!-- Sidepod undercut (visible dark carbon floor) -->
+        <path d="M62,44 L65,34 L92,30 L142,30 L160,33 L162,44 Z" fill="#0d0d0d"/>
+
+        <!-- Sidepod upper surface (slightly darker red) -->
+        <path d="M58,27 L63,19 L92,14 L136,14 L160,18 L164,28
+                 L162,44 L58,44 Z" fill="#c80300"/>
+
+        <!-- Floor plank -->
+        <rect x="22" y="43" width="198" height="2.5" rx="1" fill="#080808"/>
+
+        <!-- Gold accent stripe along sidepod base -->
+        <path d="M64,37 Q113,35 162,37 L162,39 Q113,37 64,39 Z" fill="#d4a017"/>
+
+        <!-- Air intake snorkel -->
+        <path d="M107,10 L111,3 L118,3 L122,10 Z" fill="#111"/>
+        <rect x="111" y="3.5" width="7" height="7" rx="1" fill="#040404"/>
+
+        <!-- Cockpit tub -->
+        <path d="M120,14 L127,6 L147,6 L154,14 Z" fill="#0a0a0a"/>
+        <!-- Halo -->
+        <path d="M124,8 L130,3 L147,3 L152,7"
+              fill="none" stroke="#d0d0d0" stroke-width="2.8" stroke-linecap="round"/>
+        <!-- Helmet -->
+        <ellipse cx="138" cy="8" rx="10" ry="7.5" fill="#e10600"/>
+        <rect x="131" y="6" width="16" height="5.5" rx="3" fill="#030303" opacity="0.88"/>
+        <rect x="132" y="6.5" width="10" height="2" rx="1" fill="rgba(255,255,255,0.1)"/>
+
+        <!-- Nose cone (long tapered) -->
+        <path d="M195,27 L226,33 L228,39 L220,42 L191,41 Z" fill="#e10600"/>
+        <path d="M223,33 L236,36 L235,40 L223,40 Z" fill="#c00300"/>
+
+        <!-- FRONT WING — main + flap + endplate -->
+        <path d="M205,41 L238,35 L240,42 L205,43 Z" fill="#ddd"/>
+        <rect x="209" y="31" width="28" height="3.5" rx="1" fill="#c8c8c8"/>
+        <rect x="211" y="27" width="20" height="3"   rx="1" fill="#bbb"/>
+        <rect x="237" y="29" width="3"  height="16"  rx="1" fill="#222"/>
+
+        <!-- Front suspension rods -->
+        <line x1="195" y1="41" x2="207" y2="38" stroke="#555" stroke-width="1.8" stroke-linecap="round"/>
+        <line x1="195" y1="45" x2="211" y2="43" stroke="#444" stroke-width="1.5" stroke-linecap="round"/>
+
+        <!-- REAR WHEEL -->
+        <circle cx="56" cy="54" r="16"   fill="#0e0e0e"/>
+        <circle cx="56" cy="54" r="15"   fill="none" stroke="#d4c200" stroke-width="1.5" opacity="0.55"/>
+        <circle cx="56" cy="54" r="11"   fill="#1a1a1a"/>
+        <circle cx="56" cy="54" r="8.5"  fill="#222"/>
+        <circle cx="56" cy="54" r="6"    fill="#b8880a"/>
+        <circle cx="56" cy="54" r="4"    fill="#d4a017"/>
+        <circle cx="56" cy="54" r="2.2"  fill="#ffc820"/>
+        <circle cx="56" cy="54" r="1.1"  fill="#ffe060"/>
+
+        <!-- FRONT WHEEL -->
+        <circle cx="194" cy="55" r="13"  fill="#0e0e0e"/>
+        <circle cx="194" cy="55" r="12"  fill="none" stroke="#d4c200" stroke-width="1.5" opacity="0.55"/>
+        <circle cx="194" cy="55" r="9"   fill="#1a1a1a"/>
+        <circle cx="194" cy="55" r="7"   fill="#222"/>
+        <circle cx="194" cy="55" r="4.8" fill="#b8880a"/>
+        <circle cx="194" cy="55" r="3.2" fill="#d4a017"/>
+        <circle cx="194" cy="55" r="1.8" fill="#ffc820"/>
+        <circle cx="194" cy="55" r="0.9" fill="#ffe060"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">
+      <img src="jcr.png" alt="JCR">
+    </a>
+    <div class="nav-center">
+      <a href="index.html" class="active">Home</a>
+     <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="staff.html">Staff</a>
+      
+    </div>
+    <div class="nav-right">
+      <div class="nav-socials">
+        <a href="https://twitch.tv/jcrleague" target="_blank"><svg viewBox="0 0 24 24"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg></a>
+        <a href="https://www.tiktok.com/@jcrleague" target="_blank"><svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>
+        <a href="https://www.youtube.com/@JCRLeague" target="_blank"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+      </div>
+      <a href="https://discord.gg/jcr" target="_blank" class="nav-cta">
+        <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+        Join Discord
+      </a>
+    </div>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-center').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <main class="main-content">
+
+    <!-- HERO -->
+    <section class="hero">
+      <canvas id="hero-bg"></canvas>
+      <img class="hero-logo fade-in" src="jcr.png" alt="JCR Logo">
+      <h1 class="fade-in d1">Just <span>Competitive</span> Racing</h1>
+      <p class="hero-tagline fade-in d2">The ultimate competitive F1 sim racing league. Fair racing, real competition, pure adrenaline.</p>
+      <div class="hero-buttons fade-in d3">
+        <a href="https://discord.gg/jcr" target="_blank" class="btn btn-discord">
+          <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+          Join Discord
+        </a>
+        
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="home-stats section-dark">
+      <div class="home-stats-grid">
+        <div class="home-stat">
+          <span class="home-stat-number" data-target="3">0</span>
+          <span class="home-stat-label">Season</span>
+        </div>
+        <div class="home-stat">
+          <span class="home-stat-number" data-target="100" data-suffix="+">0</span>
+          <span class="home-stat-label">Drivers</span>
+        </div>
+        <div class="home-stat">
+          <span class="home-stat-number" data-target="3">0</span>
+          <span class="home-stat-label">Tiers</span>
+        </div>
+        <div class="home-stat">
+          <span class="home-stat-number" data-target="30">0</span>
+          <span class="home-stat-label">Races</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features section-light">
+      <div class="section-header">
+        <h2>Why JCR?</h2>
+        <div class="divider"></div>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card fade-in">
+          <div class="feature-icon">&#127937;</div>
+          <h3>Competitive Racing</h3>
+          <p>Clean, fair, and fiercely competitive racing across multiple seasons. Every point counts, every race matters.</p>
+        </div>
+        <div class="feature-card fade-in d1">
+          <div class="feature-icon">&#127942;</div>
+          <h3>Full Championships</h3>
+          <p>Complete seasons with driver and constructor standings, race-by-race scoring, and championship titles on the line.</p>
+        </div>
+        <div class="feature-card fade-in d2">
+          <div class="feature-icon">&#129309;</div>
+          <h3>Great Community</h3>
+          <p>Join a growing community of passionate sim racers. Friendly off-track, ruthless on-track.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="join section-dark">
+      <div class="join-card fade-in">
+        <div class="join-icon">
+          <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+        </div>
+        <h2>Ready to <span>Race</span>?</h2>
+        <p>Join over 100+ drivers competing in 3 Different Tiers of the JCR league. Sign up through our Discord server and get on the grid.</p>
+        <a href="https://discord.gg/jcr" target="_blank" class="btn btn-gold">
+          Join the Community
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    &copy; 2026 <span>Just Competitive Racing</span> &mdash; All rights reserved.
+    Designed and developed by Terje
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+  // ===== F1 LIGHTS-OUT LOADING SCREEN =====
+  (function() {
+    var screen = document.getElementById('jcr-load');
+    var bar    = document.getElementById('ldBar');
+    var loText = document.getElementById('ldLo');
+    var car    = document.getElementById('ld-car-wrap');
+    var lights = [
+      document.getElementById('ll1'),
+      document.getElementById('ll2'),
+      document.getElementById('ll3'),
+      document.getElementById('ll4'),
+      document.getElementById('ll5')
+    ];
+
+    requestAnimationFrame(function() { bar.style.width = '100%'; });
+
+    lights.forEach(function(l, i) {
+      setTimeout(function() { l.classList.add('on'); }, 2500 + i * 300);
+    });
+
+    setTimeout(function() {
+      lights.forEach(function(l) {
+        l.classList.remove('on');
+        l.classList.add('out');
+      });
+      loText.classList.add('show');
+      car.classList.add('go');
+    }, 4200);
+
+    setTimeout(function() { screen.classList.add('gone'); }, 6000);
+  })();
+
+  // ===== HERO SPEED-PARTICLE BACKGROUND =====
+  (function() {
+    var canvas = document.getElementById('hero-bg');
+    var ctx    = canvas.getContext('2d');
+    var W, H, CX, CY;
+    var FOCAL = 420;
+    var SPEED = 2.0;
+    var COUNT = window.innerWidth < 6000 ? 1000 : 15000;
+    var particles = [];
+
+    function rand(a, b) { return a + Math.random() * (b - a); }
+
+    function makeParticle(startFar) {
+      return {
+        x:   rand(-W * 1.5, W * 1.5),
+        y:   rand(-H * 1.5, H * 1.5),
+        z:   startFar ? 900 : rand(1, 900),
+        red: Math.random() < 0.12,
+        sz:  rand(0.8, 2.2),
+        px:  null,
+        py:  null
+      };
+    }
+
+    function resize() {
+      var hero = canvas.parentElement;
+      W = canvas.width  = hero.offsetWidth;
+      H = canvas.height = hero.offsetHeight;
+      CX = W / 2;
+      CY = H / 2;
+    }
+
+    function init() {
+      resize();
+      particles = [];
+      for (var i = 0; i < COUNT; i++) {
+        particles.push(makeParticle(false));
+      }
+    }
+
+    function drawGrid() {
+      ctx.strokeStyle = 'rgba(225,6,0,0.07)';
+      ctx.lineWidth = 0.8;
+      var rows = [-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6];
+      rows.forEach(function(row) {
+        var yW = row * 120;
+        var sN = FOCAL / 60,  sF = FOCAL / 800;
+        var yN = CY + yW * sN, yFr = CY + yW * sF;
+        if (yN < -50 || yN > H + 50) return;
+        ctx.beginPath();
+        ctx.moveTo(CX + (-W) * sN, yN);
+        ctx.lineTo(CX + (-W) * sF, yFr);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(CX + W * sN, yN);
+        ctx.lineTo(CX + W * sF, yFr);
+        ctx.stroke();
+      });
+      [-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8].forEach(function(col) {
+        var xW = col * 130;
+        var sN = FOCAL / 60, sF = FOCAL / 800;
+        ctx.beginPath();
+        ctx.moveTo(CX + xW * sN, CY + 200 * sN);
+        ctx.lineTo(CX + xW * sF, CY + 200 * sF);
+        ctx.stroke();
+      });
+    }
+
+    function draw() {
+      ctx.fillStyle = '#0e0c0a';
+      ctx.fillRect(0, 0, W, H);
+
+      drawGrid();
+
+      for (var i = 0; i < particles.length; i++) {
+        var p = particles[i];
+        var scale = FOCAL / p.z;
+        var px = CX + p.x * scale;
+        var py = CY + p.y * scale;
+
+        if (p.px !== null) {
+          var alpha = p.red ? 0.85 : Math.min(0.3 + scale * 0.18, 1);
+
+          if (p.red) {
+            var grd = ctx.createRadialGradient(px, py, 0, px, py, 8 * scale);
+            grd.addColorStop(0, 'rgba(225,6,0,0.25)');
+            grd.addColorStop(1, 'rgba(225,6,0,0)');
+            ctx.fillStyle = grd;
+            ctx.beginPath();
+            ctx.arc(px, py, 8 * scale, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(225,6,0,' + alpha + ')';
+          } else {
+            ctx.strokeStyle = 'rgba(255,255,255,' + alpha + ')';
+          }
+
+          ctx.lineWidth = Math.max(0.4, p.sz * scale * 0.6);
+          ctx.beginPath();
+          ctx.moveTo(p.px, p.py);
+          ctx.lineTo(px, py);
+          ctx.stroke();
+
+          ctx.fillStyle = p.red
+            ? 'rgba(255,80,60,' + alpha + ')'
+            : 'rgba(255,255,255,' + alpha + ')';
+          ctx.beginPath();
+          ctx.arc(px, py, Math.max(0.5, p.sz * scale * 0.5), 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        p.px = px;
+        p.py = py;
+        p.z -= SPEED;
+
+        if (p.z <= 1 || px < -W || px > W * 2 || py < -H || py > H * 2) {
+          particles[i] = makeParticle(true);
+        }
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', function() {
+      resize();
+      particles.forEach(function(p) { p.px = null; p.py = null; });
+    });
+
+    init();
+    draw();
+  })();
+  </script>
+</body>
+</html>
