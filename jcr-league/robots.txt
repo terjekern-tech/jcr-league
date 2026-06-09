@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://terjekern-tech.github.io/jcr-league/sitemap.xml
